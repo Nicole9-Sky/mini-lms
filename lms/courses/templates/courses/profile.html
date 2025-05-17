@@ -1,0 +1,15 @@
+{% extends 'courses/base.html' %}
+
+{% block content %}
+  <h1>Update Your Profile</h1>
+  <h2>Welcome to your Profile</h2>
+    <p>Here you can update your profile information.</p>
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}  <!-- Render the form fields -->
+    <button type="submit">Update Profile</button>
+  </form>
+
+  <p><a href="{% url 'dashboard' %}">Back to Dashboard</a></p>
+{% endblock %}

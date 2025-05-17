@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>{{ course.title }}</h1>
+  <p>{{ course.description }}</p>
+
+  <hr>
+
+  <h2>Lessons</h2>
+  <ul>
+    {% for lesson in course.lessons.all %}
+      <li>
+        <strong>{{ lesson.title }}</strong><br>
+        {{ lesson.content|linebreaks }}
+        {% if user.is_authenticated and user.is_student %}
+          <br><a href="{% url 'add_comment' lesson.id %}">💬 Comment</a>
+        {% endif %}
+      </li>
+    {% empty %}
+      <li>No lessons added yet.</li>
+    {% endfor %}
+  </ul>
+
+  {% if user.is_authenticated and user.is_tutor %}
+    <a href="{% url 'add_lesson' course.id %}">➕ Add Lesson</a>
+  {% endif %}
+
+  <hr>
+
+  <h2>Reviews</h2>
+  {% for review in reviews %}
+    <div>
+      <p><strong>{{ review.user.username }}</strong> – Rating: {{ review.rating }}/5</p>
+      <p>{{ review.review }}</p>
+    </div>
+  {% empty %}
+    <p>No reviews yet.</p>
+  {% endfor %}
+
+  {% if user.is_authenticated %}
+    <h3>Leave a Review</h3>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Submit Review</button>
+    </form>
+  {% else %}
+    <p>You must be logged in to leave a review.</p>
+  {% endif %}
+
+  <hr>
+
+  {% if user.is_authenticated and user.is_student %}
+    <a class="btn btn-primary" href="{% url 'enroll_in_course' course.id %}">📚 Enroll Now</a>
+  {% endif %}
+{% endblock %}
+

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{%  block content %}
+    <h1>Add Comment to "{{ lesson.title}}"</h1>
+    <form method="POST"?> 
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit Comment</button>
+    </form>
+
+    <a href="{% url 'course_detail' lesson.course.id %}">Back to Course</a>
+    {% endblock %}

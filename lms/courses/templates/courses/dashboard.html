@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Welcome to your Dashboard, {{ user.username }}</h1>
+
+  {% if is_tutor %}
+    <h2>Your Courses</h2>
+    <ul>
+      {% for course in courses %}
+        <li><a href="{% url 'course_detail' course.id %}">{{ course.title }}</a></li>
+      {% endfor %}
+    </ul>
+    <p><a href="{% url 'create_course' %}">Create a New Course</a></p>
+  {% else %}
+    <h2>Your Enrolled Courses</h2>
+    <ul>
+      {% for course in courses %}
+        <li><a href="{% url 'course_detail' course.id %}">{{ course.title }}</a></li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+{% endblock %}

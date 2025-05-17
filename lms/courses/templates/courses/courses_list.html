@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}ChiomaLearn - ALL Courses{% endblock %}</title>
+    </head>
+  {% extends "base.html" %}
+
+    {% block content %}
+      <h1>Availability Courses</h1>
+    
+      <div class="course-list">
+        {% for course in page_obj %}
+          <div class="course-card">
+            <h3>
+              <a href="{% url 'course_detail' course.id %}">
+                {{ course.title }}
+              </a>
+            </h3>
+            <p>{{ course.description|truncatechars:150 }}</p>
+          </div>
+        {% empty %}
+          <p>No courses available.</p>
+        {% endfor %}
+      </div>
+    
+      <!-- Pagination Controls -->
+      <div class="pagination">
+        {% if page_obj.has_previous %}
+          <a href="?page=1">&laquo; First</a>
+          <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+        {% endif %}
+    
+        <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+    
+        {% if page_obj.has_next %}
+          <a href="?page={{ page_obj.next_page_number }}">Next</a>
+          <a href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
+        {% endif %}
+      </div>
+    {% endblock %}
+    
+
+<body>
+    <h1>All Courses</h1>
+    <ul>
+        {% for course in courses %}
+            <li>
+                <a href="{% url 'course_detail' course.id %}">{{ course.name }}</a>
+            </li>
+            {% endfor %}
+            </ul>
+            </body>
+            </html>
+            
+
+
+
+            

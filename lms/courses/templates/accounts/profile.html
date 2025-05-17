@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<h2>Welcome, {{ user.username }}!</h2>
+
+<img src="{{ user_profile.profile_photo.url }}" width="150" height="150" alt="Profile Photo">
+<p><strong>Email:</strong> {{ user.email }}</p>
+<p><strong>Bio:</strong> {{ user_profile.bio }}</p>
+
+<h3>Your Enrolled Courses:</h3>
+<ul>
+  {% for enrollment in enrolled_courses %}
+    <li>{{ enrollment.course.title }}</li>
+  {% empty %}
+    <li>You haven’t enrolled in any courses yet.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

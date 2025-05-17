@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My LMS{% endblock %}</title>
+</head>
+<body>
+    <header>
+        <div class="site-header">
+            <div class="site-branding">
+                <img src="{% static 'images/logo.png' %}" alt="FREDA 
+LMS Logo" height="40">
+                <span class="site-title">ChiomaLearn</span>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="{% url 'courses' %}">Courses</a></li>
+                    <li><a href="{% url 'contact' %}">Contact</a></li>
+                    <li><a href="{% url 'lesson_list' %}">Browse Lessons</a></li>
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'profile' %}">Profile</a></li>
+                    {% endif %}
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                    <li><a href="{% url 'Dashboard' %}">My Dashboard</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    {% if messages %}
+      <div class="messages">
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+          </div>
+        {% endfor %}
+      </div>
+      <div class="alert alert-success">
+        {{ message }}
+      </div>
+    {% endif %}
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+    <footer>
+        <p>&copy; 2025 ChiomaLearn. All rights reserved.</p>
+    </footer>
+</body>
+</html>
+
+
+

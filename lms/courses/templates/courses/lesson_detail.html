@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}ChiomaLearn - Lesson: {{ lesson.title }}{% endblock %}
+
+{% block content %}
+  <h2>{{ lesson.title }}</h2>
+  <p>{{ lesson.content }}</p>
+{% block content %}
+  <h1>{{ lesson.title }}</h1>
+  <p><strong>Course:</strong> {{ lesson.course.title }}</p>
+  <p><strong>Published:</strong> {{ lesson.created_at|date:"F j, Y" }}</p>
+  <hr>
+  <p>{{ lesson.content }}</p>
+
+  {% if lesson.material %}
+    <p><strong>Download Material:</strong>
+      <a href="{{ lesson.material.url }}" download>
+        {{ lesson.material.name|cut:"lesson_materials/" }}
+      </a>
+    </p>
+  {% else %}
+    <p><em>No file attached for this lesson.</em></p>
+  {% endif %}
+
+  <h2>Comments</h2>
+  {% if lesson.comments.all %}
+    <ul>
+      {% for comment in lesson.comments.all %}
+        <li><strong>{{ comment.user.username }}:</strong> {{ comment.content }}</li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No comments yet. Be the first to comment!</p>
+  {% endif %}
+
+  <h3>Add a Comment</h3>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit Comment</button>
+  </form>
+
+  <p><a href="{% url 'course_detail' lesson.course.id %}">🔙 Back to Course</a></p>
+{% endblock %}
